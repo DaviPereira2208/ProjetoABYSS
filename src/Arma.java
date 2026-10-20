@@ -32,4 +32,17 @@ public class Arma {
         System.out.println(nome + " disparou! Dano: " + dano);
         System.out.println("Munição restante: " + municao);
     }
+
+
+    public void recarregar(int quantidade) {
+        if (quantidade <= 0) {
+            IO.println("Quantidade de munição inválida.");
+            return;
+        }
+
+        municao += quantidade;
+        IO.println(nome + " foi recarregada!");
+        IO.println("Munição atual: " + municao);
+    }
+
 }

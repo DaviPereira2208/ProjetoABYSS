@@ -42,5 +42,29 @@ public class Main {
 
         IO.println("Vida restante de Caleb: " + caleb.getVida());
 
+        pistola.recarregar(6);
+        jogador.atacar(caleb);
+
+
+        caleb.atacar(jogador);
+
+
+        KitMedico kit = new KitMedico();
+
+        IO.println("=== USANDO KIT MÉDICO ===");
+        kit.usar(jogador);
+
+
+        KitMedico kitMedico = new KitMedico();
+
+        jogador.getInventario().adicionarItem(kit);
+        jogador.getInventario().listarItens();
+
+        IO.println("=== USANDO KIT MÉDICO ===");
+        jogador.usarKitMedico(kit);
+
+        IO.println("=== INVENTÁRIO APÓS O USO ===");
+        jogador.getInventario().listarItens();
+
     }
 }

@@ -2,16 +2,18 @@ public abstract class Personagem {
 
     private String nome;
     private int vida;
+    private int vidaMaxima;
     private int nivelInfeccao;
 
     public Personagem(String nome, int vida) {
         this.nome = nome;
-        this.vida = vida;
+        this.vida = Math.max(0, vida);
+        this.vidaMaxima = this.vida;
         this.nivelInfeccao = 0;
     }
 
     public void receberDano(int dano) {
-        if (dano <= 0) {
+        if (dano <= 0 || vida <= 0) {
             return;
         }
 
@@ -20,6 +22,21 @@ public abstract class Personagem {
         if (vida < 0) {
             vida = 0;
         }
+    }
+
+    public void recuperarVida(int quantidade) {
+        if (quantidade <= 0 || vida <= 0) {
+            IO.println("Não foi possível recuperar a vida.");
+            return;
+        }
+
+        vida += quantidade;
+
+        if (vida > vidaMaxima) {
+            vida = vidaMaxima;
+        }
+
+        IO.println(nome + " recuperou vida. Vida atual: " + vida + "/" + vidaMaxima);
     }
 
     public void aumentarInfeccao(int valor) {
@@ -40,6 +57,10 @@ public abstract class Personagem {
 
     public int getVida() {
         return vida;
+    }
+
+    public int getVidaMaxima() {
+        return vidaMaxima;
     }
 
     public int getNivelInfeccao() {

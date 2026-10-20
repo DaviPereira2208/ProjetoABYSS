@@ -1,4 +1,5 @@
-public class Item {
+public abstract class Item {
+
 
     private String nome;
 
@@ -10,9 +11,5 @@ public class Item {
         return nome;
     }
 
-    public void usar() {
-        System.out.println("Você usou: " + nome);
-    }
+    public abstract void usar();
 }
-
-
