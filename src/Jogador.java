@@ -1,4 +1,4 @@
-public class Jogador extends Personagem implements Contaminavel{
+public class Jogador extends Personagem implements Contaminavel {
 
     private Inventario inventario;
     private Arma armaAtual;
@@ -126,6 +126,57 @@ public class Jogador extends Personagem implements Contaminavel{
         }
 
         kit.usar(this);
+    }
+
+
+    public void usarItemDoInventario(int indice) {
+        if (getVida() <= 0) {
+            IO.println(getNome() + " não pode usar itens porque foi derrotado.");
+            return;
+        }
+
+        inventario.usarItem(indice, this);
+    }
+
+    public void usarCartaoNaPorta(int indice, Porta porta) {
+        if (getVida() <= 0) {
+            IO.println(getNome() + " não pode usar cartões porque foi derrotado.");
+            return;
+        }
+
+        if (porta == null) {
+            IO.println(" Nenhuma porta foi selecionada.");
+            return;
+        }
+
+        Item item = inventario.getItem(indice);
+
+        if (item == null) {
+            return;
+        }
+
+        if (item instanceof CartaoDeAcesso cartao) {
+            cartao.exibirInformacoes();
+            porta.abrir(cartao);
+        } else {
+            IO.println(" O item selecionado não é um cartão de acesso. ");
+        }
+    }
+
+    public void coletarItem(Item item){
+
+        if (getVida() <= 0 ){
+            IO.println(getNome() + " Não pode coletar itens porque foi derrotado. ");
+            return;
+        }
+
+        if (item == null){
+            IO.println(" Não há nenhum item para coletar. ");
+            return;
+        }
+
+        inventario.adicionarItem(item);
+        IO.println(getNome() + " coletou " + item.getNome());
     }
 }
 
