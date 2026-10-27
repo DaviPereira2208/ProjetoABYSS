@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class Combate {
@@ -38,79 +37,102 @@ public class Combate {
             return;
         }
 
-        IO.println("\n=== NOVA RODADA ===");
-        IO.println("Vida de " + jogador.getNome() + ": "
-                + jogador.getVida() + "/" + jogador.getVidaMaxima());
-        IO.println("Vida de " + criatura.getNome() + ": "
-                + criatura.getVida() + "/" + criatura.getVidaMaxima());
+        while (combateAtivo) {
+            IO.println("\n=== NOVA RODADA ===");
+            IO.println("Vida de " + jogador.getNome() + ": "
+                    + jogador.getVida() + "/" + jogador.getVidaMaxima());
+            IO.println("Vida de " + criatura.getNome() + ": "
+                    + criatura.getVida() + "/" + criatura.getVidaMaxima());
 
-        IO.println("\nEscolha sua ação:");
-        IO.println("1. Atacar");
-        IO.println("2. Usar item");
-        IO.println("3. Fugir");
-        IO.print("Opção: ");
+            IO.println("\nEscolha sua ação:");
+            IO.println("1. Atacar");
+            IO.println("2. Usar item");
+            IO.println("3. Fugir");
+            IO.print("Opção: ");
 
-        String entrada = scanner.nextLine();
-        int escolha;
+            String entrada = scanner.nextLine();
+            int escolha;
 
-        try {
-            escolha = Integer.parseInt(entrada);
-        } catch (NumberFormatException e) {
-            IO.println("Opção inválida. Digite 1, 2 ou 3.");
+            try {
+                escolha = Integer.parseInt(entrada);
+            } catch (NumberFormatException e) {
+                IO.println("Opção inválida. Digite 1, 2 ou 3.");
+                continue;
+            }
+
+            boolean turnoValido = false;
+
+            switch (escolha) {
+                case 1:
+                    jogador.atacar(criatura);
+                    turnoValido = true;
+                    break;
+
+                case 2:
+                    IO.println("=== INVENTÁRIO ===");
+                    jogador.getInventario().listarItens();
+                    IO.println("Digite o número do item que deseja usar.");
+                    IO.println("Digite 0 para cancelar.");
+                    IO.print("Item: ");
+
+                    String entradaItem = scanner.nextLine();
+                    int indice;
+
+                    try {
+                        indice = Integer.parseInt(entradaItem);
+                    } catch (NumberFormatException e) {
+                        IO.println("Número inválido. Tente novamente.");
+                        continue;
+                    }
+
+                    if (indice == 0) {
+                        IO.println("Uso do item cancelado.");
+                        continue;
+                    }
+
+                    if (indice < 0) {
+                        IO.println("Índice inválido.");
+                        continue;
+                    }
+
+                    boolean itemUsado =
+                            jogador.usarItemDoInventario(indice - 1);
+
+                    if (!itemUsado) {
+                        IO.println("Não foi possível usar esse item.");
+                        continue;
+                    }
+
+                    turnoValido = true;
+                    break;
+
+                case 3:
+                    IO.println("Julian tentou fugir do combate!");
+                    IO.println("Você escapou da batalha.");
+                    combateAtivo = false;
+                    return;
+
+                default:
+                    IO.println("Opção inválida. Escolha 1, 2 ou 3.");
+                    continue;
+            }
+
+            if (!turnoValido) {
+                continue;
+            }
+
+            finalizarCombate();
+
+            if (!combateAtivo) {
+                return;
+            }
+
+            // A criatura contra-ataca após uma ação válida.
+            criatura.atacar(jogador);
+
+            finalizarCombate();
             return;
         }
-
-        switch (escolha) {
-            case 1:
-                jogador.atacar(criatura);
-                break;
-
-            case 2:
-                IO.println("=== INVENTÁRIO ===");
-                jogador.getInventario().listarItens();
-                IO.println("Digite o número do item que deseja usar:");
-                IO.println("Digite 0 para cancelar.");
-                IO.print("Item: ");
-
-                String entradaItem = scanner.nextLine();
-                int indice;
-
-                try {
-                    indice = Integer.parseInt(entradaItem);
-                } catch (NumberFormatException e) {
-                    IO.println("Número inválido.");
-                    return;
-                }
-
-                if (indice == 0) {
-                    IO.println("Uso do item cancelado.");
-                    return;
-                }
-
-                jogador.usarItemDoInventario(indice - 1);
-                break;
-
-            case 3:
-                IO.println("Julian tentou fugir do combate!");
-                IO.println("Você escapou da batalha.");
-                combateAtivo = false;
-                return;
-
-            default:
-                IO.println("Opção inválida. Escolha 1, 2 ou 3.");
-                return;
-        }
-
-        finalizarCombate();
-
-        if (!combateAtivo) {
-            return;
-        }
-
-        // A criatura contra-ataca se ainda estiver viva.
-        criatura.atacar(jogador);
-
-        finalizarCombate();
     }
 
     private void finalizarCombate() {

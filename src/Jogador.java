@@ -128,14 +128,13 @@ public class Jogador extends Personagem implements Contaminavel {
         kit.usar(this);
     }
 
-
-    public void usarItemDoInventario(int indice) {
+    public boolean usarItemDoInventario(int indice) {
         if (getVida() <= 0) {
             IO.println(getNome() + " não pode usar itens porque foi derrotado.");
-            return;
+            return false;
         }
 
-        inventario.usarItem(indice, this);
+        return inventario.usarItem(indice, this);
     }
 
     public void usarCartaoNaPorta(int indice, Porta porta) {

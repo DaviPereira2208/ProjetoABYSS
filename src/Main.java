@@ -1,4 +1,5 @@
 public class Main {
+
     public static void main(String[] args) {
 
         Jogador jogador = new Jogador("Julian Reed", 100);
@@ -76,8 +77,10 @@ public class Main {
 
         // TESTES ANTIGOS DE CARTÕES E PORTAS
 
-        CartaoDeAcesso cartao = new CartaoDeAcesso("Cartão do Setor B", 2);
-        cartao.exibirInformacoes();
+        CartaoDeAcesso cartaoTeste =
+                new CartaoDeAcesso("Cartão do Setor B", 2);
+
+        cartaoTeste.exibirInformacoes();
 
         CartaoDeAcesso cartaoNivel1 =
                 new CartaoDeAcesso("Cartão do Setor A", 1);
@@ -85,18 +88,19 @@ public class Main {
         CartaoDeAcesso cartaoNivel2 =
                 new CartaoDeAcesso("Cartão do Setor B", 2);
 
-        Porta portaTeste = new Porta("Porta do Laboratório B", 2);
+        Porta portaTeste =
+                new Porta("Porta do Laboratório B", 2);
 
         portaTeste.abrir(cartaoNivel1);
         portaTeste.abrir(cartaoNivel2);
 
-        jogador.getInventario().adicionarItem(cartao);
+        jogador.getInventario().adicionarItem(cartaoTeste);
         jogador.getInventario().listarItens();
 
-        Porta outraPorta = new Porta("Porta do Laboratório B", 2);
-        outraPorta.abrir(cartao);
+        Porta outraPorta =
+                new Porta("Porta do Laboratório B", 2);
 
-        jogador.usarCartaoNaPorta(1, outraPorta);
+        outraPorta.abrir(cartaoTeste);
 
 
         // TESTES ANTIGOS DE COLETA DE CARTÕES
@@ -116,46 +120,35 @@ public class Main {
 
         // TESTE ANTIGO DE UMA SALA ISOLADA
 
-        Sala salaArquivo = new Sala(
+        Sala salaArquivoTeste = new Sala(
                 "Arquivo Subterrâneo",
                 "Uma sala escura cheia de documentos e equipamentos abandonados."
         );
 
-        salaArquivo.adicionarItem(
+        salaArquivoTeste.adicionarItem(
                 new CartaoDeAcesso("Cartão do Setor C", 3)
         );
 
-        salaArquivo.adicionarItem(new KitMedico());
-        salaArquivo.explorar();
+        salaArquivoTeste.adicionarItem(new KitMedico());
+        salaArquivoTeste.explorar();
 
-        IO.println("=== JULIAN COLETA UM ITEM ===");
-        salaArquivo.coletarItem(0, jogador);
+        salaArquivoTeste.coletarItem(0, jogador);
+        jogador.getInventario().listarItens();
+        salaArquivoTeste.explorar();
 
-        IO.println("=== INVENTÁRIO ATUALIZADO ===");
+
+        // TESTES ANTIGOS DE EXPLORAÇÃO E COMBATE
+
+        Fase faseTeste = new Fase("Setor Subterrâneo");
+        faseTeste.listarSalas();
+        faseTeste.explorarSala(1);
+
         jogador.getInventario().listarItens();
 
-        IO.println("=== SALA APÓS A COLETA ===");
-        salaArquivo.explorar();
+        Combate combateTeste =
+                new Combate(jogador, new Infectado("Infectado de Teste"));
 
-
-        // TESTES ANTIGOS DE EXPLORAÇÃO MANUAL
-
-        Fase faseSubterranea = new Fase("Setor Subterrâneo");
-
-        faseSubterranea.listarSalas();
-        faseSubterranea.explorarSala(1);
-        faseSubterranea.explorarSala(2);
-        faseSubterranea.explorarSala(3);
-
-        jogador.getInventario().listarItens();
-        jogador.usarCartaoNaPorta(2, portaTeste);
-
-        deposito.coletarItem(0, jogador);
-        deposito.coletarItem(0, jogador);
-
-        IO.println("=== TESTE DO SISTEMA DE COMBATE ===");
-        Combate combate = new Combate(jogador, infectadoArquivo);
-        combate.iniciar();
+        combateTeste.iniciar();
         */
 
 
@@ -191,9 +184,15 @@ public class Main {
         );
 
         deposito.adicionarItem(new KitMedico());
+
         deposito.adicionarItem(
                 new CartaoDeAcesso("Cartão do Depósito", 1)
         );
+
+
+        // =====================================
+        // FASE E PORTA DO LABORATÓRIO
+        // =====================================
 
         faseSubterranea.adicionarSala(recepcao);
         faseSubterranea.adicionarSala(arquivo);
@@ -221,11 +220,24 @@ public class Main {
 
 
         // =====================================
-        // INICIAR EXPLORAÇÃO
+        // INÍCIO DA EXPLORAÇÃO
         // =====================================
 
-        Exploracao exploracao = new Exploracao(jogador, recepcao);
+        IO.println("================================");
+        IO.println("        PROJECT: ABYSS");
+        IO.println("================================");
+
+        Exploracao exploracao =
+                new Exploracao(jogador, recepcao);
+
         exploracao.iniciar();
+
+        IO.println("==============================");
+        IO.println(" TESTE DE COMBATE - PROJECT: ABYSS");
+        IO.println("==============================");
+
+        Combate combate = new Combate(jogador, infectadoArquivo);
+        combate.iniciar();
 
     }
 }
