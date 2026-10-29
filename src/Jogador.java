@@ -69,29 +69,11 @@ public class Jogador extends Personagem implements Contaminavel {
             return;
         }
 
-        if (alvo.getVida() <= 0) {
-            IO.println(alvo.getNome() + " já foi derrotado.");
-            return;
-        }
-
-        if (armaAtual == null) {
-            IO.println(getNome() + " está sem arma!");
-            return;
-        }
-
-        if (armaAtual.getMunicao() <= 0) {
-            IO.println("Sem munição!");
-            return;
-        }
-
         armaAtual.disparar();
         alvo.receberDano(armaAtual.getDano());
 
         IO.println("Vida restante de " + alvo.getNome() + ": " + alvo.getVida());
 
-        if (alvo.getVida() <= 0) {
-            IO.println(alvo.getNome() + " foi derrotado!");
-        }
     }
 
     @Override

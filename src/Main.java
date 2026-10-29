@@ -194,6 +194,10 @@ public class Main {
         // FASE E PORTA DO LABORATÓRIO
         // =====================================
 
+        arquivo.adicionarItem(
+                new CartaoDeAcesso("Cartão do Laboratório", 2)
+        );
+
         faseSubterranea.adicionarSala(recepcao);
         faseSubterranea.adicionarSala(arquivo);
         faseSubterranea.adicionarSala(laboratorio);
@@ -231,13 +235,6 @@ public class Main {
                 new Exploracao(jogador, recepcao);
 
         exploracao.iniciar();
-
-        IO.println("==============================");
-        IO.println(" TESTE DE COMBATE - PROJECT: ABYSS");
-        IO.println("==============================");
-
-        Combate combate = new Combate(jogador, infectadoArquivo);
-        combate.iniciar();
 
     }
 }

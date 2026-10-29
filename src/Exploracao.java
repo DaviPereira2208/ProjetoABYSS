@@ -22,6 +22,7 @@ public class Exploracao {
         IO.println("=== PROJECT: ABYSS ===");
         IO.println("Você é " + jogador.getNome() + ".");
         salaAtual.explorar();
+        verificarCriaturas();
 
         boolean executando = true;
 
@@ -32,7 +33,9 @@ public class Exploracao {
             IO.println("2. Coletar item");
             IO.println("3. Viajar para outra sala");
             IO.println("4. Consultar inventário");
-            IO.println("5. Sair do jogo");
+            IO.println("5. Usar cartão de acesso");
+            IO.println("6. Usar item");
+            IO.println("7. Sair do jogo");
             IO.print("Escolha: ");
 
             String entrada = scanner.nextLine();
@@ -41,7 +44,7 @@ public class Exploracao {
             try {
                 opcao = Integer.parseInt(entrada);
             } catch (NumberFormatException e) {
-                IO.println("Digite um número de 1 a 5.");
+                IO.println("Digite um número de 1 a 6.");
                 continue;
             }
 
@@ -63,6 +66,14 @@ public class Exploracao {
                     break;
 
                 case 5:
+                    usarCartaoDeAcesso();
+                    break;
+
+                case 6:
+                    usarItem();
+                    break;
+
+                case 7:
                     IO.println("Encerrando exploração...");
                     executando = false;
                     break;
@@ -81,8 +92,6 @@ public class Exploracao {
 
     private void coletarItem() {
         IO.println("=== COLETAR ITEM ===");
-
-        // Mostra os itens encontrados na sala.
         salaAtual.explorar();
 
         IO.print("Digite o número do item para coletar: ");
@@ -112,8 +121,8 @@ public class Exploracao {
                     ? "Disponível"
                     : "BLOQUEADA";
 
-            IO.println((i + 1) + ". "
-                    + destino.getNome() + " - " + status);
+            IO.println((i + 1) + ". " + destino.getNome()
+                    + " - " + status);
         }
 
         IO.println("0. Cancelar");
@@ -141,11 +150,134 @@ public class Exploracao {
             }
 
             salaAtual = destino;
-            jogador.mover("para " + salaAtual.getNome());
+            jogador.mover(salaAtual.getNome());
 
             IO.println("Você chegou a: " + salaAtual.getNome());
             salaAtual.explorar();
+            verificarCriaturas();
 
+        } catch (NumberFormatException e) {
+            IO.println("Digite um número válido.");
+        }
+    }
+
+    private void usarCartaoDeAcesso() {
+        ArrayList<Sala> salas = salaAtual.getSalasConectadas();
+        ArrayList<Sala> salasBloqueadas = new ArrayList<>();
+
+        IO.println("=== CARTÕES DE ACESSO ===");
+
+        for (Sala sala : salas) {
+            Porta porta = sala.getPortaAcesso();
+
+            if (porta != null && !porta.isAberta()) {
+                salasBloqueadas.add(sala);
+            }
+        }
+
+        if (salasBloqueadas.isEmpty()) {
+            IO.println("Não há portas bloqueadas nas saídas desta sala.");
+            return;
+        }
+
+        IO.println("Portas bloqueadas:");
+
+        for (int i = 0; i < salasBloqueadas.size(); i++) {
+            Sala destino = salasBloqueadas.get(i);
+            Porta porta = destino.getPortaAcesso();
+
+            IO.println((i + 1) + ". " + porta.getNome()
+                    + " (nível necessário: " + porta.getNivelAcesso() + ")");
+        }
+
+        IO.println("0. Cancelar");
+        IO.print("Escolha a porta: ");
+
+        try {
+            int escolhaPorta = Integer.parseInt(scanner.nextLine());
+
+            if (escolhaPorta == 0) {
+                IO.println("Operação cancelada.");
+                return;
+            }
+
+            if (escolhaPorta < 1 || escolhaPorta > salasBloqueadas.size()) {
+                IO.println("Opção de porta inválida.");
+                return;
+            }
+
+            Sala destino = salasBloqueadas.get(escolhaPorta - 1);
+            Porta porta = destino.getPortaAcesso();
+
+            jogador.getInventario().listarItens();
+
+            IO.println("Digite o número do cartão no inventário.");
+            IO.println("Digite 0 para cancelar.");
+            IO.print("Cartão: ");
+
+            int indiceCartao = Integer.parseInt(scanner.nextLine());
+
+            if (indiceCartao == 0) {
+                IO.println("Operação cancelada.");
+                return;
+            }
+
+            jogador.usarCartaoNaPorta(indiceCartao - 1, porta);
+
+        } catch (NumberFormatException e) {
+            IO.println("Digite um número válido.");
+        }
+    }
+
+    private void verificarCriaturas() {
+        Criatura criatura = salaAtual.encontrarCriatura();
+
+        if (criatura == null) {
+            return;
+        }
+
+        IO.println("\n!!! UMA CRIATURA SE APROXIMA !!!");
+        IO.println(criatura.getNome() + " bloqueia seu caminho!");
+
+        Combate combate = new Combate(jogador, criatura);
+        combate.iniciar();
+
+        if (jogador.getVida() <= 0) {
+            IO.println("Julian não conseguiu sobreviver.");
+            return;
+        }
+
+        if (criatura.getVida() <= 0) {
+            IO.println("A área parece estar segura... por enquanto.");
+        }
+    }
+
+    private void usarItem() {
+        IO.println("=== USAR ITEM ===");
+        jogador.getInventario().listarItens();
+
+        IO.println("Digite o número do item que deseja usar.");
+        IO.println("Digite 0 para cancelar.");
+        IO.print("Item: ");
+
+        try {
+            int indice = Integer.parseInt(scanner.nextLine());
+
+            if (indice == 0) {
+                IO.println("Uso do item cancelado.");
+                return;
+            }
+
+            if (indice < 0) {
+                IO.println("Índice inválido.");
+                return;
+            }
+
+            boolean itemUsado = jogador.usarItemDoInventario(indice - 1);
+
+            if (!itemUsado) {
+                IO.println("Não foi possível usar esse item.");
+            }
         } catch (NumberFormatException e) {
             IO.println("Digite um número válido.");
         }
