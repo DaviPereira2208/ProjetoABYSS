@@ -105,13 +105,15 @@ Projeto desenvolvido para fins acadêmicos.
 # 📄 Documentação Completa
 Acesse o documento oficial com toda a história, regras, personagens e arquitetura POO do projeto:
 
-👉 **[Abrir Documentação no Google Docs](https://docs.google.com/document/d/1v4WscJyBJtY775_ha5gkp1DF5UBXcv69tSPDFL28McE/edit?usp=sharing)*
+👉 **[Abrir Documentação no Google Docs](https://docs.google.com/document/d/1v4WscJyBJtY775_ha5gkp1DF5UBXcv69tSPDFL28McE/edit?usp=sharing)**
 
 
 # 📊 Diagrama de Classes (UML)
 
-![Diagrama de Classes]
-(<img width="1195" height="1261" alt="PROJECT_ABYSS_Diagrama" src="https://github.com/user-attachments/assets/c0ff4a55-3ac3-4d77-995e-d686386593e2" />)
+👉 **[Diagrama de Classes]
+(<img width="1195" height="1261" alt="PROJECT_ABYSS_Diagrama" src="https://github.com/user-attachments/assets/c0ff4a55-3ac3-4d77-995e-d686386593e2" />)**
 
 # 📊 Apresentação (Slides)
-👉 **[Baixar Apresentação do Projeto (.pptx)](./PROJECT_ABYSS_Apresentacao_estilo_Canva.pptx)**
+
+👉 **[Visualizar Slides da Apresentação (PDF)]
+(./PROJECT_ABYSS_Apresentacao.pdf)**
