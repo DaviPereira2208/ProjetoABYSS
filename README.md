@@ -115,5 +115,4 @@ Acesse o documento oficial com toda a história, regras, personagens e arquitetu
 
 # 📊 Apresentação (Slides)
 
-👉 **[Visualizar Slides da Apresentação (PDF)]
-(./PROJECT_ABYSS_Apresentacao.pdf)*
+👉 **[Visualizar Slides da Apresentação (PDF)](./PROJECT_ABYSS_Apresentacao.pdf)**
