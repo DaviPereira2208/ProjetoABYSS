@@ -105,7 +105,7 @@ Projeto desenvolvido para fins acadêmicos.
 # 📄 Documentação Completa
 Acesse o documento oficial com toda a história, regras, personagens e arquitetura POO do projeto:
 
-👉 **[Abrir Documentação no Google Docs](https://docs.google.com/document/d/1v4WscJyBJtY775_ha5gkp1DF5UBXcv69tSPDFL28McE/edit?usp=sharing)**
+👉 **[Abrir Documentação no Google Docs](https://docs.google.com/document/d/1v4WscJyBJtY775_ha5gkp1DF5UBXcv69tSPDFL28McE/edit?usp=sharing)*
 
 
 # 📊 Diagrama de Classes (UML)
@@ -116,4 +116,4 @@ Acesse o documento oficial com toda a história, regras, personagens e arquitetu
 # 📊 Apresentação (Slides)
 
 👉 **[Visualizar Slides da Apresentação (PDF)]
-(./PROJECT_ABYSS_Apresentacao.pdf)**
+(./PROJECT_ABYSS_Apresentacao.pdf)*
