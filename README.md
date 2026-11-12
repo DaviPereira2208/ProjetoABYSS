@@ -112,3 +112,6 @@ Acesse o documento oficial com toda a história, regras, personagens e arquitetu
 
 ![Diagrama de Classes]
 (<img width="1195" height="1261" alt="PROJECT_ABYSS_Diagrama" src="https://github.com/user-attachments/assets/c0ff4a55-3ac3-4d77-995e-d686386593e2" />)
+
+# 📊 Apresentação (Slides)
+👉 **[Baixar Apresentação do Projeto (.pptx)](./PROJECT_ABYSS_Apresentacao_estilo_Canva.pptx)**
